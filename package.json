@@ -1,0 +1,17 @@
+{
+  "name": "@superset/signal-starter",
+  "version": "0.1.0",
+  "description": "Scaffold a full-stack Next.js + Agno agents app",
+  "bin": {
+    "create-signal-app": "./bin/create.js",
+    "signal-starter": "./bin/create.js"
+  },
+  "files": [
+    "bin",
+    "template"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

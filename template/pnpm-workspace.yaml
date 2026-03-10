@@ -1,0 +1,2 @@
+patchedDependencies:
+  drizzle-kit@0.31.9: patches/drizzle-kit@0.31.9.patch
