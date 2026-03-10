@@ -1,5 +1,5 @@
 {
-  "name": "@superset/signal-starter",
+  "name": "@superset-signal/starter",
   "version": "0.1.0",
   "description": "Scaffold a full-stack Next.js + Agno agents app",
   "bin": {
