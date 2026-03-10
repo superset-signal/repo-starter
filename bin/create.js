@@ -108,12 +108,51 @@ if (!fs.existsSync(readmePath)) {
 }
 
 console.log(`
-✅ Project scaffolded!
+✅  "${projectName}" is ready!
 
-Next steps:
+── Get started ───────────────────────────────────────────
   cd ${projectName}
-  cp .env.example .env.local        # fill in Clerk + Supabase keys
+  cp .env.example .env.local
   make agents-setup                  # Python venv + deps
   make setup                         # pnpm install + db push
   make dev-all                       # start both services
+
+── Supabase (required) ───────────────────────────────────
+  1. Create a project at https://supabase.com
+  2. Settings → Database → copy the two connection strings:
+       DATABASE_URL  (transaction mode, port 6543)
+       DIRECT_URL    (direct connection, port 5432)
+  3. Paste both into .env.local
+  4. Run: make setup   (pushes the Drizzle schema)
+
+── Clerk (optional) ──────────────────────────────────────
+  Clerk runs in keyless mode locally — no keys needed to
+  get started. When you're ready to go to production:
+
+  1. Create an app at https://clerk.com
+  2. Copy NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY + CLERK_SECRET_KEY
+     into .env.local
+  3. Dashboard → Webhooks → Add Endpoint:
+       URL:    https://your-domain.com/api/webhooks/clerk
+       Events: user.created, user.updated
+       Copy the signing secret → CLERK_WEBHOOK_SECRET
+
+── Northflank (optional — deploy when ready) ─────────────
+  Two services to create in your Northflank project:
+
+  Next.js (Dockerfile in repo root)
+    Port: 3000
+    Build arg + env: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+    Env: CLERK_SECRET_KEY, CLERK_WEBHOOK_SECRET,
+         DATABASE_URL, DIRECT_URL
+
+  Agents (agents/Dockerfile)
+    Port: 8080  — set to internal-only
+    Env: OPENAI_API_KEY, SUPABASE_URL,
+         SUPABASE_SERVICE_ROLE_KEY
+
+  After first deploy → update your Clerk webhook URL to
+  your Northflank domain.
+
+──────────────────────────────────────────────────────────
 `);

@@ -8,6 +8,12 @@ Scaffold a full-stack app with:
 - **Clerk** authentication
 - **Docker** + **Makefile** for local development
 
+## Prerequisites
+
+- **Node.js** >= 18
+- **Python** >= 3.12
+- **pnpm** (`npm install -g pnpm`)
+
 ## Quick start
 
 ```bash
@@ -31,6 +37,8 @@ Then follow the setup sections below to configure Clerk and Supabase before runn
 ---
 
 ## Setting up Clerk
+
+Clerk runs in **keyless mode** locally — you can start the app without any Clerk keys and auth will work out of the box. You only need to create a Clerk app when deploying to production.
 
 1. **Create an application** at [clerk.com](https://clerk.com). Choose your sign-in methods (email, Google, GitHub, etc.).
 
