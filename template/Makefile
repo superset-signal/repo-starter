@@ -1,4 +1,4 @@
-.PHONY: help install setup dev build lint db-push db-studio db-generate \
+.PHONY: help install setup dev build lint db-migrate db-pull db-reset db-types \
        agents-setup agents-dev agents-docker agents-docker-down \
        setup-all dev-all clean
 
@@ -13,7 +13,7 @@ help: ## Show this help
 install: ## Install Node dependencies
 	pnpm install
 
-setup: install db-push ## Full Next.js setup (install + schema push)
+setup: install db-migrate ## Full Next.js setup (install + run migrations)
 	@echo "\n✅ Next.js setup complete. Add your keys to .env.local, then run: make dev"
 
 dev: ## Start Next.js dev server
@@ -27,14 +27,20 @@ lint: ## Run ESLint
 
 # —— Database ——
 
-db-push: ## Push Drizzle schema to database
-	pnpm db:push
+db-migrate: ## Apply pending migrations to remote database
+	pnpm db:migrate
 
-db-studio: ## Open Drizzle Studio
-	pnpm db:studio
+db-pull: ## Pull schema from remote database and create migration
+	pnpm db:pull
 
-db-generate: ## Generate Drizzle migrations
-	pnpm db:generate
+db-reset: ## Reset database (re-run all migrations from scratch)
+	pnpm db:reset
+
+db-types: ## Regenerate TypeScript types from database schema
+	pnpm db:types
+
+db-new: ## Create a new migration file (usage: make db-new name=add_posts)
+	supabase migration new $(name)
 
 # —— Agno Agents ——
 

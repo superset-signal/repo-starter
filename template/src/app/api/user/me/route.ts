@@ -1,7 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { supabase } from "@/db";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -10,11 +8,11 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const [user] = await db
+  const { data: user } = await supabase
+    .from("users")
     .select()
-    .from(users)
-    .where(eq(users.clerkId, userId))
-    .limit(1);
+    .eq("clerk_id", userId)
+    .single();
 
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });

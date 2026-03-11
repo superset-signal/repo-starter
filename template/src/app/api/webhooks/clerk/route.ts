@@ -1,9 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { supabase } from "@/db";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -49,13 +47,10 @@ export async function POST(req: Request) {
     const email = email_addresses?.[0]?.email_address ?? "";
     const name = [first_name, last_name].filter(Boolean).join(" ") || null;
 
-    await db
-      .insert(users)
-      .values({ clerkId: id, email, name, avatarUrl: image_url || null })
-      .onConflictDoUpdate({
-        target: users.clerkId,
-        set: { email, name, avatarUrl: image_url || null },
-      });
+    await supabase.from("users").upsert(
+      { clerk_id: id, email, name, avatar_url: image_url || null },
+      { onConflict: "clerk_id" }
+    );
   }
 
   return NextResponse.json({ received: true });
