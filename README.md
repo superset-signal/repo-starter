@@ -5,16 +5,12 @@ Interactive CLI to scaffold a full-stack agentic app with your choice of fronten
 ## Quick start
 
 ```bash
-npx @superset-signal/starter
+npx @superset-signal/starter init
 ```
 
-Or with the alias:
+The CLI will ask for your project name (defaults to the current folder name), then let you pick your frontend and agent framework with arrow keys.
 
-```bash
-npx create-signal-app
-```
-
-## What you choose
+## Options
 
 | Choice | Options |
 |---|---|
@@ -30,13 +26,14 @@ A `CLAUDE.md` is auto-generated based on your architecture choices.
 For CI or scripted usage, pass all options as flags:
 
 ```bash
-npx create-signal-app my-app --frontend=nextjs --agents=agno
-npx create-signal-app my-app --frontend=vite --agents=pydantic-ai
+npx @superset-signal/starter init my-app --frontend=nextjs --agents=agno -y
+npx @superset-signal/starter init my-app --frontend=vite --agents=pydantic-ai -y
 ```
 
 ## Stack details
 
 ### Next.js frontend
+
 - Next.js 16 (App Router), React 19, TypeScript
 - Tailwind CSS 4, shadcn/ui
 - Clerk (`@clerk/nextjs`) with keyless mode for local dev
@@ -45,6 +42,7 @@ npx create-signal-app my-app --frontend=vite --agents=pydantic-ai
 - Multi-stage Dockerfile (Node.js standalone)
 
 ### Vite frontend
+
 - Vite + React 19, TypeScript
 - Tailwind CSS 4, shadcn/ui
 - Clerk (`@clerk/clerk-react`)
@@ -54,12 +52,14 @@ npx create-signal-app my-app --frontend=vite --agents=pydantic-ai
 - Multi-stage Dockerfile (nginx)
 
 ### Agno agents
+
 - Python 3.12, FastAPI, streaming SSE
 - Agno agent framework with OpenAI
 - Supabase Python client
 - Dockerfile (uvicorn)
 
 ### Pydantic AI agents
+
 - Python 3.12, FastAPI, streaming SSE
 - Pydantic AI agent framework with OpenAI
 - Supabase Python client
