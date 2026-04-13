@@ -1,15 +1,19 @@
 {
   "name": "@superset-signal/starter",
-  "version": "0.1.3",
-  "description": "Scaffold a full-stack Next.js + Agno agents app",
+  "version": "0.2.0",
+  "description": "Scaffold a full-stack app with Next.js or Vite, Agno or Pydantic AI agents, and Supabase",
   "bin": {
-    "create-signal-app": "./bin/create.js",
-    "signal-starter": "./bin/create.js"
+    "create-signal-app": "./bin/create.mjs",
+    "signal-starter": "./bin/create.mjs"
   },
   "files": [
     "bin",
-    "template"
+    "templates",
+    "lib"
   ],
+  "dependencies": {
+    "@clack/prompts": "^1.2.0"
+  },
   "engines": {
     "node": ">=18"
   },
